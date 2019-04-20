@@ -7,15 +7,17 @@ use App\Models\Contacts;
 class ContactsTransformer extends TransformerAbstract
 {
     /**
-     * A Fractal transformer.
-     *
-     * @return array
-     */
+    * A Fractal transformer.
+    *
+    * @return array
+    */
     public function transform(Contacts $contact)
     {
         return [
-            "fullname" => $contact->fullname,
-            "mobile"    => $contact->mobile
+            "fullname"    => $contact->fullname,
+            "title"       => $contact->title,
+            "company"     => $contact->company,
+            "mobile"      => $contact->mobile
         ];
     }
 }

@@ -11,7 +11,12 @@ window.Vue = require('vue');
 
 import Buefy from 'buefy';
 import VueRouter from 'vue-router'
+import VueWait from 'vue-wait'
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
+Vue.use(PerfectScrollbar);
+Vue.use(VueWait);
 Vue.use(Buefy);
 Vue.use(VueRouter);
 /**
@@ -38,6 +43,9 @@ const store = require('./store').default;
 
 const app = new Vue({
     el: '#app',
+    wait: new VueWait({
+        useVuex: true
+    }),
     router,
     store
 });
