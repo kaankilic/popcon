@@ -23,11 +23,11 @@ const getters = {
 }
 
 const mutations = {
-	setPosts(state, posts){
-		state.posts = posts;
+	setContacts(state, contacts){
+		state.contacts = contacts;
 	},
-	mergePosts(state, posts){
-		state.posts = state.posts.concat(posts);
+	mergeContacts(state, contacts){
+		state.contacts = state.contacts.concat(contacts);
 	},
 	setPagination(state, pagination){
 		state.pagination = pagination;
@@ -54,7 +54,7 @@ const actions = {
 				page: context.state.pagination.current_page
 			}
 		});
-		context.commit("mergePosts",response.data.objects);
+		context.commit("mergeContacts",response.data.objects);
 		context.commit("setPagination",response.data.meta.pagination);
 	}
 }
