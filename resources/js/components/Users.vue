@@ -6,20 +6,18 @@
                 loading
             </template>
             <li v-for="(contact,index) in contacts" :key="index">
-                <a href="#">
+                <router-link :to="{name:'card',params:{id:contact.id}}">
                     <img src="https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg" alt="avatar">
                     <div class="content">
                         <h5 class="title">{{contact.fullname}}</h5>
                         <p class="subtitle">{{contact.title}}</p>
                     </div>
-                </a>
+                </router-link>
             </li>
         </v-wait>
         <infinite-loading @infinite="loadMore">
             <template slot="no-more"></template>
-            <template slot="no-results">
-                ...
-            </template>
+            <template slot="no-results">...</template>
         </infinite-loading>
     </ul>
 </template>
@@ -30,7 +28,8 @@ import InfiniteLoading from 'vue-infinite-loading';
 export default {
     computed:{
         ...mapGetters({
-            contacts:'getContacts'
+            contacts:'getContacts',
+            hasMore: 'hasMore'
         }),
         ...mapWaitingGetters({
             getContacts: 'LOADING_CONTACTS',

@@ -26,14 +26,17 @@ const getters = {
 	},
 	getQuery: state => {
 		return state.query
-	}
+	},
+	hasMore: state => {
+		return state.pagination.current_page<state.pagination.total_pages
+	},
 }
 
 const mutations = {
 	setContacts(state, contacts){
 		state.contacts = contacts;
 	},
-	setContact(state, contacts){
+	setContact(state, contact){
 		state.contact = contact;
 	},
 	mergeContacts(state, contacts){
@@ -71,6 +74,10 @@ const actions = {
 			context.commit("setContacts",response.data.objects);
 		}
 		context.commit("setPagination",response.data.meta.pagination);
+	},
+	async LOAD_CONTACT(context, data){
+		var response = await axios.get("/api/contacts/view/"+data);
+		context.commit("setContact",response.data);
 	}
 }
 export default new Vuex.Store({

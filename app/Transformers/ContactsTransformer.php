@@ -14,6 +14,7 @@ class ContactsTransformer extends TransformerAbstract
     public function transform(Contacts $contact)
     {
         return [
+            "id"          => $contact->id,
             "fullname"    => $contact->fullname,
             "title"       => $contact->title,
             "company"     => $contact->company,

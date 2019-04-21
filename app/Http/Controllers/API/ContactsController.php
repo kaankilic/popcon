@@ -17,4 +17,8 @@ class ContactsController extends Controller
         $contacts = $contacts->paginate();
         return fractal($contacts, new ContactsTransformer);
     }
+    public function getContact($ID){
+        $contact = Contacts::findOrFail($ID);
+        return fractal($contact, new ContactsTransformer);
+    }
 }
