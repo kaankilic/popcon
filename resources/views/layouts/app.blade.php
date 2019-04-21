@@ -11,10 +11,7 @@
 <body>
     <div id="app">
         <aside>
-            <b-field>
-                <b-input placeholder="Search..." type="search" icon="magnify">
-                </b-input>
-            </b-field>
+            <search></search>
             <users></users>
         </aside>
         <div class="wrapper">

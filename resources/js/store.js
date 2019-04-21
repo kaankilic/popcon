@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 const state = {
 	contacts:[],
+	contact:{},
 	pagination: {
 		total: 10,
 		count: 10,
@@ -19,12 +20,21 @@ const state = {
 const getters = {
 	getContacts: state => {
 		return state.contacts
+	},
+	getContact: state => {
+		return state.contact
+	},
+	getQuery: state => {
+		return state.query
 	}
 }
 
 const mutations = {
 	setContacts(state, contacts){
 		state.contacts = contacts;
+	},
+	setContact(state, contacts){
+		state.contact = contact;
 	},
 	mergeContacts(state, contacts){
 		state.contacts = state.contacts.concat(contacts);
@@ -45,16 +55,21 @@ const actions = {
 	SET_CONTACTS(context, data) {
 		context.commit('setContacts', data)
 	},
+	SET_CONTACT(context, data) {
+		context.commit('setContact', data)
+	},
 	async LOAD_CONTACTS(context, data){
 		var response = await axios.get("/api/contacts",{
 			params: {
 				keyword: context.state.query.keyword,
-				locations: context.state.query.locations,
-				categories: context.state.query.categories,
 				page: context.state.pagination.current_page
 			}
 		});
-		context.commit("mergeContacts",response.data.objects);
+		if(typeof data=="undefined"){
+			context.commit("mergeContacts",response.data.objects);
+		}else{
+			context.commit("setContacts",response.data.objects);
+		}
 		context.commit("setPagination",response.data.meta.pagination);
 	}
 }
