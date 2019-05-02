@@ -1776,8 +1776,8 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
+/* harmony import */ var label_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! label-edit */ "./node_modules/label-edit/dist/vue-label-edit.js");
+/* harmony import */ var label_edit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(label_edit__WEBPACK_IMPORTED_MODULE_1__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -1802,13 +1802,97 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    contact: 'getContact'
-  })),
+  data: function data() {
+    return {
+      isCardModalActive: false
+    };
+  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    contact: function contact(state) {
+      return state.contact;
+    }
+  }),
+  components: {
+    LabelEdit: label_edit__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    cardUpdate: function cardUpdate() {
+      var _this = this;
+
+      this.$store.dispatch("UPDATE_CONTACT", this.contact).then(function () {
+        _this.isCardModalActive = false;
+
+        _this.$toast.open('Card saved');
+      });
+    },
+    deleteCard: function deleteCard() {
+      var _this2 = this;
+
+      this.$dialog.confirm({
+        message: 'Continue on this task?',
+        onConfirm: function onConfirm() {
+          _this2.$store.dispatch("DELETE_CONTACT", _this2.contact);
+
+          _this2.$toast.open('User confirmed');
+        }
+      });
+    }
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     next(function (vm) {
@@ -30874,6 +30958,33 @@ return jQuery;
 
 /***/ }),
 
+/***/ "./node_modules/label-edit/dist/vue-label-edit.js":
+/*!********************************************************!*\
+  !*** ./node_modules/label-edit/dist/vue-label-edit.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,function(){return function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s="./src/LabelEdit.vue")}({"./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/LabelEdit.vue":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/LabelEdit.vue ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */function(module,__webpack_exports__,__webpack_require__){"use strict";eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tname: 'LabelEdit',\n\tdata: function () {\n\t\treturn {\n\t\t\tedit: false, // define whether it is in edit mode or not\n\t\t\tlabel: '', // v-bind data model for input text\n\t\t\tempty: 'Enter some text value' // empty place holder .. replace with your own localization for default\n\t\t};\n\t},\n\tprops: ['text', 'placeholder'], // parent should provide :text or :placeholder\n\tmethods: {\n\t\tinitText: function () {\n\t\t\tif (this.text == '' || this.text == undefined) {\n\t\t\t\tthis.label = this.vlabel;\n\t\t\t} else {\n\t\t\t\tthis.label = this.text;\n\t\t\t}\n\t\t},\n\t\t// when the div label got clicked and trigger the text box\n\t\tonLabelClick: function () {\n\t\t\tthis.edit = true;\n\t\t\tthis.label = this.text;\n\t\t},\n\t\t// trigger when textbox got lost focus\n\t\tupdateTextBlur: function () {\n\t\t\t// update the edit mode to false .. display div label text\n\t\t\tthis.edit = false;\n\t\t\t// emit text updated callback\n\t\t\tthis.$emit('text-updated-blur', this.label);\n\t\t},\n\t\tupdateTextEnter: function () {\n\t\t\tthis.edit = false;\n\t\t\tthis.$emit('text-updated-enter', this.label);\n\t\t}\n\t},\n\tcomputed: {\n\t\tvplaceholder: function () {\n\t\t\t// check if the placeholder is undefined or empty\n\t\t\tif (this.placeholder == undefined || this.placeholder == '') {\n\t\t\t\t// if it is empty or undefined, pre-populate with built-in place holder text\n\t\t\t\treturn this.empty;\n\t\t\t} else {\n\t\t\t\treturn this.placeholder;\n\t\t\t}\n\t\t},\n\t\tvlabel: function () {\n\t\t\t// after text has been updated\n\t\t\t// return text value or place holder value depends on value of the text\n\t\t\tif (this.text == undefined || this.text == '') {\n\t\t\t\treturn this.vplaceholder;\n\t\t\t} else {\n\t\t\t\treturn this.label;\n\t\t\t}\n\t\t}\n\t},\n\tmounted: function () {\n\t\t// initiate the label view\n\t\tthis.initText();\n\t},\n\tupdated: function () {\n\t\tvar ed = this.$refs.labeledit;\n\t\tif (ed != null) {\n\t\t\ted.focus();\n\t\t}\n\t},\n\twatch: {\n\t\ttext: function (value) {\n\t\t\tif (value == '' || value == undefined) {\n\t\t\t\tthis.label = this.vplaceholder;\n\t\t\t}\n\t\t}\n\t}\n});\n\n//# sourceURL=webpack://vue-label-edit/./src/LabelEdit.vue?./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0")},"./node_modules/vue-loader/lib/runtime/component-normalizer.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/component-normalizer.js ***!
+  \*********************************************************************/
+/*! exports provided: default */function(module,__webpack_exports__,__webpack_require__){"use strict";eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return normalizeComponent; });\n/* globals __VUE_SSR_CONTEXT__ */\n\n// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).\n// This module is a runtime utility for cleaner component module output and will\n// be included in the final webpack user bundle.\n\nfunction normalizeComponent (\n  scriptExports,\n  render,\n  staticRenderFns,\n  functionalTemplate,\n  injectStyles,\n  scopeId,\n  moduleIdentifier, /* server only */\n  shadowMode /* vue-cli only */\n) {\n  scriptExports = scriptExports || {}\n\n  // ES6 modules interop\n  var type = typeof scriptExports.default\n  if (type === 'object' || type === 'function') {\n    scriptExports = scriptExports.default\n  }\n\n  // Vue.extend constructor export interop\n  var options = typeof scriptExports === 'function'\n    ? scriptExports.options\n    : scriptExports\n\n  // render functions\n  if (render) {\n    options.render = render\n    options.staticRenderFns = staticRenderFns\n    options._compiled = true\n  }\n\n  // functional template\n  if (functionalTemplate) {\n    options.functional = true\n  }\n\n  // scopedId\n  if (scopeId) {\n    options._scopeId = scopeId\n  }\n\n  var hook\n  if (moduleIdentifier) { // server build\n    hook = function (context) {\n      // 2.3 injection\n      context =\n        context || // cached call\n        (this.$vnode && this.$vnode.ssrContext) || // stateful\n        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional\n      // 2.2 with runInNewContext: true\n      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {\n        context = __VUE_SSR_CONTEXT__\n      }\n      // inject component styles\n      if (injectStyles) {\n        injectStyles.call(this, context)\n      }\n      // register component module identifier for async chunk inferrence\n      if (context && context._registeredComponents) {\n        context._registeredComponents.add(moduleIdentifier)\n      }\n    }\n    // used by ssr in case component is cached and beforeCreate\n    // never gets called\n    options._ssrRegister = hook\n  } else if (injectStyles) {\n    hook = shadowMode\n      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }\n      : injectStyles\n  }\n\n  if (hook) {\n    if (options.functional) {\n      // for template-only hot-reload because in that case the render fn doesn't\n      // go through the normalizer\n      options._injectStyles = hook\n      // register for functioal component in vue file\n      var originalRender = options.render\n      options.render = function renderWithStyleInjection (h, context) {\n        hook.call(context)\n        return originalRender(h, context)\n      }\n    } else {\n      // inject component registration as beforeCreate hook\n      var existing = options.beforeCreate\n      options.beforeCreate = existing\n        ? [].concat(existing, hook)\n        : [hook]\n    }\n  }\n\n  return {\n    exports: scriptExports,\n    options: options\n  }\n}\n\n\n//# sourceURL=webpack://vue-label-edit/./node_modules/vue-loader/lib/runtime/component-normalizer.js?")},'./node_modules/vue-loader/lib/template-compiler/index.js?{"id":"data-v-4fc6ac75","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/LabelEdit.vue':
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-4fc6ac75","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/LabelEdit.vue ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */function(module,__webpack_exports__,__webpack_require__){"use strict";eval('__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c("div", { staticClass: "vlabeledit" }, [\n    !_vm.edit\n      ? _c(\n          "div",\n          { staticClass: "vlabeledit-label", on: { click: _vm.onLabelClick } },\n          [_vm._v(_vm._s(_vm.vlabel))]\n        )\n      : _vm._e(),\n    _vm._v(" "),\n    _vm.edit\n      ? _c("input", {\n          directives: [\n            {\n              name: "model",\n              rawName: "v-model",\n              value: _vm.label,\n              expression: "label"\n            }\n          ],\n          ref: "labeledit",\n          staticClass: "vlabeledit-input",\n          attrs: { type: "text", placeholder: _vm.vplaceholder },\n          domProps: { value: _vm.label },\n          on: {\n            blur: _vm.updateTextBlur,\n            keyup: function($event) {\n              if (\n                !("button" in $event) &&\n                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")\n              ) {\n                return null\n              }\n              return _vm.updateTextEnter($event)\n            },\n            input: function($event) {\n              if ($event.target.composing) {\n                return\n              }\n              _vm.label = $event.target.value\n            }\n          }\n        })\n      : _vm._e()\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\nif (false) {}\n\n//# sourceURL=webpack://vue-label-edit/./src/LabelEdit.vue?./node_modules/vue-loader/lib/template-compiler?%7B%22id%22:%22data-v-4fc6ac75%22,%22hasScoped%22:false,%22optionsId%22:%220%22,%22buble%22:%7B%22transforms%22:%7B%7D%7D%7D!./node_modules/vue-loader/lib/selector.js?type=template&index=0')},"./src/LabelEdit.vue":
+/*!***************************!*\
+  !*** ./src/LabelEdit.vue ***!
+  \***************************/
+/*! exports provided: default */function(module,__webpack_exports__,__webpack_require__){"use strict";eval('__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_LabelEdit_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !babel-loader!../node_modules/vue-loader/lib/selector?type=script&index=0!./LabelEdit.vue */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/LabelEdit.vue");\n/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_template_compiler_index_id_data_v_4fc6ac75_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_LabelEdit_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/vue-loader/lib/template-compiler/index?{"id":"data-v-4fc6ac75","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!../node_modules/vue-loader/lib/selector?type=template&index=0!./LabelEdit.vue */ "./node_modules/vue-loader/lib/template-compiler/index.js?{\\"id\\":\\"data-v-4fc6ac75\\",\\"hasScoped\\":false,\\"optionsId\\":\\"0\\",\\"buble\\":{\\"transforms\\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/LabelEdit.vue");\n/* harmony import */ var _node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/vue-loader/lib/runtime/component-normalizer */ "./node_modules/vue-loader/lib/runtime/component-normalizer.js");\nvar disposed = false\n/* script */\n\n\n/* template */\n\n/* template functional */\nvar __vue_template_functional__ = false\n/* styles */\nvar __vue_styles__ = null\n/* scopeId */\nvar __vue_scopeId__ = null\n/* moduleIdentifier (server only) */\nvar __vue_module_identifier__ = null\n\nvar Component = Object(_node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__["default"])(\n  _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_LabelEdit_vue__WEBPACK_IMPORTED_MODULE_0__["default"],\n  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_4fc6ac75_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_LabelEdit_vue__WEBPACK_IMPORTED_MODULE_1__["render"],\n  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_4fc6ac75_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_LabelEdit_vue__WEBPACK_IMPORTED_MODULE_1__["staticRenderFns"],\n  __vue_template_functional__,\n  __vue_styles__,\n  __vue_scopeId__,\n  __vue_module_identifier__\n)\nComponent.options.__file = "src/LabelEdit.vue"\n\n/* hot reload */\nif (false) {}\n\n/* harmony default export */ __webpack_exports__["default"] = (Component.exports);\n\n\n//# sourceURL=webpack://vue-label-edit/./src/LabelEdit.vue?')}})});
+
+/***/ }),
+
 /***/ "./node_modules/lodash/lodash.js":
 /*!***************************************!*\
   !*** ./node_modules/lodash/lodash.js ***!
@@ -52348,42 +52459,257 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "profile" }, [
-    _c("header", [
-      _c("div", { staticClass: "headline" }, [
-        _c("img", {
-          attrs: {
-            src:
-              "https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg",
-            alt: "avatar"
-          }
-        }),
+  return _c(
+    "div",
+    { staticClass: "profile" },
+    [
+      _c("header", [
+        _c("div", { staticClass: "headline" }, [
+          _c("img", {
+            attrs: {
+              src:
+                "https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg",
+              alt: "avatar"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "content" }, [
+            _c("h5", { staticClass: "title" }, [
+              _vm._v(_vm._s(_vm.contact.fullname))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "subtitle" }, [
+              _vm._v(
+                _vm._s(_vm.contact.title) + ", @" + _vm._s(_vm.contact.company)
+              )
+            ])
+          ])
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "content" }, [
-          _c("h5", { staticClass: "title" }, [
-            _vm._v(_vm._s(_vm.contact.fullname))
+        _c("ul", [
+          _c("li", [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.isCardModalActive = true
+                  }
+                }
+              },
+              [_c("b-icon", { attrs: { icon: "wrench" } })],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "subtitle" }, [
-            _vm._v(
-              _vm._s(_vm.contact.title) + ", @" + _vm._s(_vm.contact.company)
+          _c("li", [
+            _c(
+              "button",
+              { on: { click: _vm.deleteCard } },
+              [_c("b-icon", { attrs: { icon: "delete" } })],
+              1
             )
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("ul", [_c("li", [_c("b-icon", { attrs: { icon: "home" } })], 1)])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "details" }, [
-      _c("p", [
-        _c("strong", [_vm._v("Mobile:")]),
-        _vm._v(" " + _vm._s(_vm.contact.mobile))
-      ])
-    ])
-  ])
+      _c("div", { staticClass: "details" }, [
+        _vm._m(0),
+        _c("div", { staticClass: "field" }, [
+          _vm._v(
+            "\n                " + _vm._s(_vm.contact.mobile) + "\n            "
+          )
+        ]),
+        _vm._v(" "),
+        _c("p")
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: { active: _vm.isCardModalActive, "has-modal-card": "" },
+          on: {
+            "update:active": function($event) {
+              _vm.isCardModalActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.cardUpdate($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "modal-card" }, [
+                _c("section", { staticClass: "modal-card-body" }, [
+                  _c("div", { staticClass: "columns is-multiline" }, [
+                    _c(
+                      "div",
+                      { staticClass: "column is-half" },
+                      [
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Name" } },
+                          [
+                            _c("b-input", {
+                              attrs: { type: "title", required: "" },
+                              model: {
+                                value: _vm.contact.name,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.contact, "name", $$v)
+                                },
+                                expression: "contact.name"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "column is-half" },
+                      [
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Surname" } },
+                          [
+                            _c("b-input", {
+                              attrs: { type: "title", required: "" },
+                              model: {
+                                value: _vm.contact.surname,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.contact, "surname", $$v)
+                                },
+                                expression: "contact.surname"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "column is-half" },
+                      [
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Organisation" } },
+                          [
+                            _c("b-input", {
+                              attrs: {
+                                type: "title",
+                                placeholder: "Company Name"
+                              },
+                              model: {
+                                value: _vm.contact.company,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.contact, "company", $$v)
+                                },
+                                expression: "contact.company"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "column is-half" },
+                      [
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Title" } },
+                          [
+                            _c("b-input", {
+                              attrs: { type: "title", placeholder: "Tite" },
+                              model: {
+                                value: _vm.contact.title,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.contact, "title", $$v)
+                                },
+                                expression: "contact.title"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "column is-full" },
+                      [
+                        _c(
+                          "b-field",
+                          { attrs: { label: "Mobile" } },
+                          [
+                            _c("b-input", {
+                              attrs: {
+                                type: "mobile",
+                                placeholder: "Mobile No",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.contact.mobile,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.contact, "mobile", $$v)
+                                },
+                                expression: "contact.mobile"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "column is-full" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-success",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Mobile:")])])
+  }
+]
 render._withStripped = true
 
 
@@ -70009,15 +70335,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./resources/js/components/Search.vue ***!
   \********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Search_vue_vue_type_template_id_5026ffd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Search.vue?vue&type=template&id=5026ffd3& */ "./resources/js/components/Search.vue?vue&type=template&id=5026ffd3&");
 /* harmony import */ var _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Search.vue?vue&type=script&lang=js& */ "./resources/js/components/Search.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Search_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -70047,7 +70372,7 @@ component.options.__file = "resources/js/components/Search.vue"
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Search.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70198,7 +70523,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   contacts: [],
-  contact: {},
+  contact: {
+    fullname: null,
+    name: null,
+    surname: null,
+    mobile: null,
+    company: null,
+    title: null
+  },
   pagination: {
     total: 10,
     count: 10,
@@ -70324,7 +70656,15 @@ var actions = {
     }
 
     return LOAD_CONTACT;
-  }()
+  }(),
+  UPDATE_CONTACT: function UPDATE_CONTACT(context, data) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/contacts/update/" + data.id, data).then(function (response) {
+      context.commit("setContact", response.data);
+    });
+  },
+  DELETE_CONTACT: function DELETE_CONTACT(context, data) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/contacts/delete/" + data.id);
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: state,

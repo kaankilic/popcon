@@ -3,7 +3,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 const state = {
 	contacts:[],
-	contact:{},
+	contact:{
+		fullname:null,
+		name:null,
+		surname:null,
+		mobile:null,
+		company:null,
+		title:null
+	},
 	pagination: {
 		total: 10,
 		count: 10,
@@ -78,6 +85,14 @@ const actions = {
 	async LOAD_CONTACT(context, data){
 		var response = await axios.get("/api/contacts/view/"+data);
 		context.commit("setContact",response.data);
+	},
+	UPDATE_CONTACT(context, data){
+		axios.post("/api/contacts/update/"+data.id,data).then((response)=>{
+			context.commit("setContact",response.data);
+		});
+	},
+	DELETE_CONTACT(context, data){
+		axios.get("/api/contacts/delete/"+data.id);
 	}
 }
 export default new Vuex.Store({

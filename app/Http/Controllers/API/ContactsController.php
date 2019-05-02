@@ -21,4 +21,15 @@ class ContactsController extends Controller
         $contact = Contacts::findOrFail($ID);
         return fractal($contact, new ContactsTransformer);
     }
+    public function update(Request $request, $ID){
+        $inputs = $request->only(["name","surname","mobile","company","title"]);
+        $contact = Contacts::findOrFail($ID);
+        $contact->update($inputs);
+        return fractal($contact, new ContactsTransformer);
+    }
+    public function delete($ID){
+        $contact = Contacts::findOrFail($ID);
+        $contact->delete();
+        return fractal($contact, new ContactsTransformer);
+    }
 }

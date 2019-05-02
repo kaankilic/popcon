@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('/contacts','ContactsController@getContacts');
 Route::get('/contacts/view/{id}','ContactsController@getContact');
+Route::get('/contacts/delete/{id}','ContactsController@delete');
+Route::post('/contacts/update/{id}','ContactsController@update');
