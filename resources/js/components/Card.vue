@@ -80,7 +80,7 @@ export default {
         }
     },
     computed: mapState({
-            contact: state => state.contact
+        contact: state => state.contact
     }),
     components:{
         LabelEdit
@@ -88,7 +88,16 @@ export default {
     mounted() {
         console.log('Component mounted.')
     },
+    created () {
+        this.fetchData()
+    },
+    watch: {
+        '$route': 'fetchData'
+    },
     methods:{
+        fetchData(){
+            this.$store.dispatch("LOAD_CONTACT",this.$route.params.id);
+        },
         cardUpdate(){
             this.$store.dispatch("UPDATE_CONTACT",this.contact).then(
                 () => {
@@ -106,16 +115,6 @@ export default {
                 }
             })
         }
-    },
-    beforeRouteEnter (to, from, next) {
-        next(vm => {
-            vm.$store.dispatch("LOAD_CONTACT",to.params.id);
-        });
-    },
-    beforeRouteEnter (to, from, next) {
-        next(vm => {
-            vm.$store.dispatch("LOAD_CONTACT",to.params.id);
-        });
     }
 }
 </script>

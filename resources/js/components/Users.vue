@@ -1,6 +1,5 @@
 <template>
     <ul class="users">
-
         <v-wait for="LOADING_CONTACTS">
             <template slot="waiting">
                 loading
@@ -14,11 +13,11 @@
                     </div>
                 </router-link>
             </li>
+            <infinite-loading direction="bottom" @infinite="loadMore">
+                <template slot="no-more"></template>
+                <template slot="no-results">...</template>
+            </infinite-loading>
         </v-wait>
-        <infinite-loading @infinite="loadMore">
-            <template slot="no-more"></template>
-            <template slot="no-results">...</template>
-        </infinite-loading>
     </ul>
 </template>
 <script>

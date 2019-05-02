@@ -1778,8 +1778,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var label_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! label-edit */ "./node_modules/label-edit/dist/vue-label-edit.js");
 /* harmony import */ var label_edit__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(label_edit__WEBPACK_IMPORTED_MODULE_1__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -1854,7 +1852,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isCardModalActive: false
@@ -1871,7 +1869,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     console.log('Component mounted.');
   },
+  created: function created() {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
+    fetchData: function fetchData() {
+      this.$store.dispatch("LOAD_CONTACT", this.$route.params.id);
+    },
     cardUpdate: function cardUpdate() {
       var _this = this;
 
@@ -1893,17 +1900,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    next(function (vm) {
-      vm.$store.dispatch("LOAD_CONTACT", to.params.id);
-    });
   }
-}, "beforeRouteEnter", function beforeRouteEnter(to, from, next) {
-  next(function (vm) {
-    vm.$store.dispatch("LOAD_CONTACT", to.params.id);
-  });
-}));
+});
 
 /***/ }),
 
@@ -2014,7 +2012,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -52815,18 +52812,18 @@ var render = function() {
               ],
               1
             )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "infinite-loading",
-        { on: { infinite: _vm.loadMore } },
-        [
-          _c("template", { slot: "no-more" }),
+          }),
           _vm._v(" "),
-          _c("template", { slot: "no-results" }, [_vm._v("...")])
+          _c(
+            "infinite-loading",
+            { attrs: { direction: "bottom" }, on: { infinite: _vm.loadMore } },
+            [
+              _c("template", { slot: "no-more" }),
+              _vm._v(" "),
+              _c("template", { slot: "no-results" }, [_vm._v("...")])
+            ],
+            2
+          )
         ],
         2
       )
@@ -70479,18 +70476,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: [// dynamic segments start with a colon
   {
     name: 'card',
     path: '/card/:id',
-    component: __webpack_require__(/*! ./components/Card */ "./resources/js/components/Card.vue")["default"],
-    beforeEnter: function beforeEnter(to, from, next) {
-      next(function (vm) {
-        vm.$store.dispatch("LOAD_CONTACT", to.params.id);
-      });
-    }
+    component: __webpack_require__(/*! ./components/Card */ "./resources/js/components/Card.vue")["default"]
   }]
 }));
 
@@ -70575,7 +70569,7 @@ var mutations = {
     Object.assign(state.query, query);
   },
   nextPage: function nextPage() {
-    state.pagination.current_page += 1;
+    state.pagination.current_page++;
   }
 };
 var actions = {

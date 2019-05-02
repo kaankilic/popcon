@@ -57,7 +57,7 @@ const mutations = {
 		Object.assign(state.query, query);
 	},
 	nextPage(){
-		state.pagination.current_page += 1;
+		state.pagination.current_page++;
 	}
 }
 
