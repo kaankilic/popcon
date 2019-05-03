@@ -27,7 +27,6 @@
         "buefy": "^0.7.4",
         "label-edit": "0.0.9",
         "vue-infinite-loading": "^2.4.4",
-        "vue-infinite-scroll": "^2.0.2",
         "vue-router": "^3.0.6",
         "vue-wait": "^1.3.3",
         "vue2-perfect-scrollbar": "^1.2.0",

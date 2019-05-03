@@ -2026,14 +2026,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2065,24 +2057,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!this.hasMore) {
-                  _context.next = 7;
-                  break;
-                }
-
                 this.$store.commit('nextPage');
-                _context.next = 4;
+                _context.next = 3;
                 return this.loadContacts();
 
-              case 4:
+              case 3:
                 $state.loaded();
-                _context.next = 8;
-                break;
 
-              case 7:
-                $state.complete();
+                if (!this.hasMore) {
+                  $state.completed();
+                }
 
-              case 8:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -52771,64 +52757,42 @@ var render = function() {
     "ul",
     { staticClass: "users" },
     [
-      _c(
-        "v-wait",
-        { attrs: { for: "LOADING_CONTACTS" } },
-        [
-          _c("template", { slot: "waiting" }, [
-            _vm._v("\n            loading\n        ")
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.contacts, function(contact, index) {
-            return _c(
-              "li",
-              { key: index },
+      _vm._l(_vm.contacts, function(contact, $index) {
+        return _c(
+          "li",
+          { key: $index },
+          [
+            _c(
+              "router-link",
+              { attrs: { to: { name: "card", params: { id: contact.id } } } },
               [
-                _c(
-                  "router-link",
-                  {
-                    attrs: { to: { name: "card", params: { id: contact.id } } }
-                  },
-                  [
-                    _c("img", {
-                      attrs: {
-                        src:
-                          "https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg",
-                        alt: "avatar"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "content" }, [
-                      _c("h5", { staticClass: "title" }, [
-                        _vm._v(_vm._s(contact.fullname))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "subtitle" }, [
-                        _vm._v(_vm._s(contact.title))
-                      ])
-                    ])
-                  ]
-                )
-              ],
-              1
+                _c("img", {
+                  attrs: {
+                    src:
+                      "https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg",
+                    alt: "avatar"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "content" }, [
+                  _c("h5", { staticClass: "title" }, [
+                    _vm._v(_vm._s(contact.fullname))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "subtitle" }, [
+                    _vm._v(_vm._s(contact.title))
+                  ])
+                ])
+              ]
             )
-          }),
-          _vm._v(" "),
-          _c(
-            "infinite-loading",
-            { attrs: { direction: "bottom" }, on: { infinite: _vm.loadMore } },
-            [
-              _c("template", { slot: "no-more" }),
-              _vm._v(" "),
-              _c("template", { slot: "no-results" }, [_vm._v("...")])
-            ],
-            2
-          )
-        ],
-        2
-      )
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c("infinite-loading", { on: { infinite: _vm.loadMore } })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -70568,8 +70532,14 @@ var mutations = {
     state.pagination.current_page = 1;
     Object.assign(state.query, query);
   },
-  nextPage: function nextPage() {
+  nextPage: function nextPage(state) {
     state.pagination.current_page++;
+  },
+  popContact: function popContact(state, id) {
+    var index = state.contacts.findIndex(function (card) {
+      return card.id == id;
+    });
+    state.contacts.splice(index, 1);
   }
 };
 var actions = {
@@ -70657,7 +70627,9 @@ var actions = {
     });
   },
   DELETE_CONTACT: function DELETE_CONTACT(context, data) {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/contacts/delete/" + data.id);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/contacts/delete/" + data.id).then(function () {
+      context.commit("popContact", data.id);
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({

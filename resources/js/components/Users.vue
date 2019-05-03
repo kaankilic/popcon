@@ -1,23 +1,15 @@
 <template>
     <ul class="users">
-        <v-wait for="LOADING_CONTACTS">
-            <template slot="waiting">
-                loading
-            </template>
-            <li v-for="(contact,index) in contacts" :key="index">
-                <router-link :to="{name:'card',params:{id:contact.id}}">
-                    <img src="https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg" alt="avatar">
-                    <div class="content">
-                        <h5 class="title">{{contact.fullname}}</h5>
-                        <p class="subtitle">{{contact.title}}</p>
-                    </div>
-                </router-link>
-            </li>
-            <infinite-loading direction="bottom" @infinite="loadMore">
-                <template slot="no-more"></template>
-                <template slot="no-results">...</template>
-            </infinite-loading>
-        </v-wait>
+        <li v-for="(contact,$index) in contacts" :key="$index">
+            <router-link :to="{name:'card',params:{id:contact.id}}">
+                <img src="https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg" alt="avatar">
+                <div class="content">
+                    <h5 class="title">{{contact.fullname}}</h5>
+                    <p class="subtitle">{{contact.title}}</p>
+                </div>
+            </router-link>
+        </li>
+        <infinite-loading @infinite="loadMore"></infinite-loading>
     </ul>
 </template>
 <script>
@@ -46,12 +38,11 @@ export default {
             loadContacts: { action: 'LOAD_CONTACTS', loader: 'LOADING_CONTACTS' }
         }),
         async loadMore($state){
-            if (this.hasMore) {
-                this.$store.commit('nextPage');
-                await this.loadContacts();
-                $state.loaded();
-            }else{
-                $state.complete();
+            this.$store.commit('nextPage');
+            await this.loadContacts();
+            $state.loaded();
+            if(!this.hasMore){
+                $state.completed();
             }
         }
     },

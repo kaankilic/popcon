@@ -56,8 +56,12 @@ const mutations = {
 		state.pagination.current_page = 1;
 		Object.assign(state.query, query);
 	},
-	nextPage(){
+	nextPage(state){
 		state.pagination.current_page++;
+	},
+	popContact(state,id){
+		var index = state.contacts.findIndex(card => card.id==id);
+		state.contacts.splice(index, 1);
 	}
 }
 
@@ -92,7 +96,9 @@ const actions = {
 		});
 	},
 	DELETE_CONTACT(context, data){
-		axios.get("/api/contacts/delete/"+data.id);
+		axios.get("/api/contacts/delete/"+data.id).then(()=>{
+			context.commit("popContact",data.id);
+		});
 	}
 }
 export default new Vuex.Store({
