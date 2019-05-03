@@ -46,6 +46,11 @@ const mutations = {
 	setContact(state, contact){
 		state.contact = contact;
 	},
+	updateContact(state, contact){
+		var index = state.contacts.findIndex(card => card.id==contact.id);
+		console.log("index"+index);
+		state.contacts[index] = contact;
+	},
 	mergeContacts(state, contacts){
 		state.contacts = state.contacts.concat(contacts);
 	},
@@ -93,6 +98,7 @@ const actions = {
 	UPDATE_CONTACT(context, data){
 		axios.post("/api/contacts/update/"+data.id,data).then((response)=>{
 			context.commit("setContact",response.data);
+			context.commit("updateContact",response.data);
 		});
 	},
 	DELETE_CONTACT(context, data){

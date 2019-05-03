@@ -52766,13 +52766,7 @@ var render = function() {
               "router-link",
               { attrs: { to: { name: "card", params: { id: contact.id } } } },
               [
-                _c("img", {
-                  attrs: {
-                    src:
-                      "https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg",
-                    alt: "avatar"
-                  }
-                }),
+                _c("img", { attrs: { src: "img/avatar.svg", alt: "avatar" } }),
                 _vm._v(" "),
                 _c("div", { staticClass: "content" }, [
                   _c("h5", { staticClass: "title" }, [
@@ -70522,6 +70516,13 @@ var mutations = {
   setContact: function setContact(state, contact) {
     state.contact = contact;
   },
+  updateContact: function updateContact(state, contact) {
+    var index = state.contacts.findIndex(function (card) {
+      return card.id == contact.id;
+    });
+    console.log("index" + index);
+    state.contacts[index] = contact;
+  },
   mergeContacts: function mergeContacts(state, contacts) {
     state.contacts = state.contacts.concat(contacts);
   },
@@ -70624,6 +70625,7 @@ var actions = {
   UPDATE_CONTACT: function UPDATE_CONTACT(context, data) {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/contacts/update/" + data.id, data).then(function (response) {
       context.commit("setContact", response.data);
+      context.commit("updateContact", response.data);
     });
   },
   DELETE_CONTACT: function DELETE_CONTACT(context, data) {

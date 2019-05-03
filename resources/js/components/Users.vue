@@ -2,7 +2,7 @@
     <ul class="users">
         <li v-for="(contact,$index) in contacts" :key="$index">
             <router-link :to="{name:'card',params:{id:contact.id}}">
-                <img src="https://www.pexl.io/themes/swipe/dist/img/avatars/avatar-male-1.jpg" alt="avatar">
+                <img src="img/avatar.svg" alt="avatar">
                 <div class="content">
                     <h5 class="title">{{contact.fullname}}</h5>
                     <p class="subtitle">{{contact.title}}</p>
